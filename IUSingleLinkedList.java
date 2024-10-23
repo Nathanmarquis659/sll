@@ -26,7 +26,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public void addToFront(T element) {
 		Node<T> newHead = new Node<T>(element);
-		if (size == 0) {
+		if (isEmpty()) {
 			head = tail = newHead;
 		} else {
 			newHead.setNext(head);
@@ -39,7 +39,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public void addToRear(T element) {
 		Node<T> newTail = new Node<T>(element);
-		if (size == 0) {
+		if (isEmpty()) {
 			head = tail = newTail;
 		} else {
 			tail.setNext(newTail);
@@ -70,21 +70,12 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T removeFirst() {
-        if (size == 0) {
-            throw new NoSuchElementException();
-        }
-		head = head.getNext();
-		size --;
-		modCount++;
-		return head.getElement();
+		return remove(0);
 	}
 
 	@Override
 	public T removeLast() {
-		// TODO 
-		// size --;
-		// modCount++;
-		return null;
+		return remove(size-1);
 	}
 
 	@Override
@@ -129,10 +120,30 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T remove(int index) {
-		// TODO 
-		// size --;
-		// modCount++;
-		return null;
+		if (index < 0 || size-1 < index) {
+			throw new IndexOutOfBoundsException();
+		}
+		int nodeIndex = 0;
+		Node<T> currentNode = head;
+		Node<T> deletedNode = currentNode;
+		if (index == 0) {
+			head = head.getNext();
+		} else {
+			//COULD BE MADE MORE CLEAR. Get through a loop proper # times and then do required action
+			while(nodeIndex < index) {
+				if(nodeIndex == index - 1) {
+					deletedNode = currentNode.getNext();
+					currentNode.setNext(deletedNode.getNext());
+				}
+				currentNode = currentNode.getNext();
+				nodeIndex++;
+			}
+
+		}
+
+		size --;
+		modCount++;
+		return deletedNode.getElement();
 	}
 
 	@Override
