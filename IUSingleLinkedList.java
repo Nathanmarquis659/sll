@@ -25,47 +25,65 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addToFront(T element) {
-		// TODO 
-		
+		Node<T> newHead = new Node<T>(element);
+		if (size == 0) {
+			head = tail = newHead;
+		} else {
+			newHead.setNext(head);
+			head = newHead;
+		}
+		size ++;
+		modCount++;
 	}
 
 	@Override
 	public void addToRear(T element) {
-		// TODO 
-		
+		Node<T> newTail = new Node<T>(element);
+		if (size == 0) {
+			head = tail = newTail;
+		} else {
+			tail.setNext(newTail);
+			tail = newTail;
+		}
+		size ++;
+		modCount++;
 	}
 
 	@Override
 	public void add(T element) {
-		// TODO 
-		
+		addToRear(element);
 	}
 
 	@Override
 	public void addAfter(T element, T target) {
 		// TODO 
-		
+		// size ++;
+		// modCount++;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		// TODO 
-		
+		// size ++;
+		// modCount++;
 	}
 
 	@Override
 	public T removeFirst() {
-        // if (head == null) {
-        //     throw new NoSuchElementException();
-        // }
-		// head = head.getNext();
-		//     return head.getElement();
-        return null;
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+		head = head.getNext();
+		size --;
+		modCount++;
+		return head.getElement();
 	}
 
 	@Override
 	public T removeLast() {
 		// TODO 
+		// size --;
+		// modCount++;
 		return null;
 	}
 
@@ -112,18 +130,21 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public T remove(int index) {
 		// TODO 
+		// size --;
+		// modCount++;
 		return null;
 	}
 
 	@Override
 	public void set(int index, T element) {
 		// TODO 
-		
+		// modCount++;
 	}
 
 	@Override
 	public T get(int index) {
 		// TODO 
+		// modCount++;
 		return null;
 	}
 
@@ -235,6 +256,8 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		@Override
 		public void remove() {
 			// TODO
+			// modCount++;
+			// iterModCount++;
 		}
 	}
 }
