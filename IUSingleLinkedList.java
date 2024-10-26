@@ -128,7 +128,17 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void set(int index, T element) {
-		// TODO 
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		Node<T> currentNode = head;
+
+		for (int i = 0; i < size-1; i++) {
+			currentNode = currentNode.getNext();
+		}
+		
+		currentNode.setElement(element);
 		modCount++;
 	}
 
@@ -140,7 +150,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		Node<T> currentNode = head;
 
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size-1; i++) {
 			currentNode = currentNode.getNext();
 		}
 		
