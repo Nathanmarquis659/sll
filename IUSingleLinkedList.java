@@ -292,7 +292,8 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
                 throw new IllegalStateException();
             }
 
-			
+			nodeSub1 = nodeSub2;
+			nodeSub2 = null;
 
             canRemove = false;
             modCount++;
