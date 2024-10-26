@@ -208,24 +208,20 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public String toString() {
-        // if (array == null)
-        //     return "null";
+        if (isEmpty()) return "[]";
 
-        // int iMax = rear - 1;
-        // if (iMax == -1)
-        //     return "[]";
+		Node<T> currentNode = head;
+        StringBuilder b = new StringBuilder();
+        b.append('[');
 
-        // StringBuilder b = new StringBuilder();
-        // b.append('[');
-
-        // for (int i=0; i < rear; i++) {
-        //     b.append(String.valueOf(array[i]));
-        //     b.append(", ");
-        // }
-		// b.delete(b.length()-2, b.length());
-		// b.append(']');
-        // return b.toString();
-        return "";
+        while (currentNode != null) {
+            b.append(String.valueOf(currentNode.getElement()));
+            b.append(", ");
+			currentNode = currentNode.getNext();
+        }
+		b.delete(b.length()-2, b.length());
+		b.append(']');
+        return b.toString();
     }
 
 	@Override
