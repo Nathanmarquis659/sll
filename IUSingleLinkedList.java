@@ -345,11 +345,17 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if (head == nodeSub1) {
 				head = head.getNext();
 			} else if (tail == nodeSub1) {
-				tail = nodeSub1;
+				tail = nodeSub2;
+				tail.setNext(null);
 			}
 			
-			nodeSub1 = nodeSub2;
-			nodeSub2 = null;
+			// nodeSub1 = nodeSub2;
+			// nodeSub2 = null;
+			if (nodeSub2 != null) {
+				nodeSub2.setNext(nodeCurrent);
+				nodeSub1 = nodeSub2;
+			}
+
             canRemove = false;
 			size--;
             modCount++;
