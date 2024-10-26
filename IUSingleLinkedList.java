@@ -280,14 +280,23 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			nodeSub2 = nodeSub1;
 			nodeSub1 = nodeCurrent;
 			nodeCurrent = nodeCurrent.getNext();
-			return nodeCurrent.getElement();
+			return nodeSub1.getElement();
 		}
 		
 		@Override
 		public void remove() {
-			// TODO
-			// modCount++;
-			// iterModCount++;
+			if(iterModCount != modCount){
+                throw new ConcurrentModificationException();
+            }
+			if (canRemove == false) {
+                throw new IllegalStateException();
+            }
+
+			
+
+            canRemove = false;
+            modCount++;
+            iterModCount++;
 		}
 	}
 }
