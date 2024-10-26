@@ -65,10 +65,12 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		while (currentNode != null && !isFound) {
 			if (currentNode.getElement().equals(target)) {
 				isFound = true;
-				currentNode.setNext(newNode);
 				if (currentNode == tail) {
-					tail = newNode;;
+					tail = newNode;
+				} else {
+					newNode.setNext(currentNode.getNext());
 				}
+				currentNode.setNext(newNode);
 			} else {
 				currentNode = currentNode.getNext();
 			}
