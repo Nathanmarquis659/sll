@@ -1,6 +1,10 @@
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * Single-linked node implementation of IndexedUnsortedList.
@@ -241,25 +245,42 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	/** Iterator for IUSingleLinkedList */
 	private class SLLIterator implements Iterator<T> {
-		private Node<T> nextNode;
+		private Node<T> nodeCurrent;
+		private Node<T> nodeSub1;
+		private Node<T> nodeSub2;
 		private int iterModCount;
+		private boolean canRemove;
 		
 		/** Creates a new iterator for the list */
 		public SLLIterator() {
-			nextNode = head;
+			nodeCurrent = head;
+			nodeSub1 = null;
+			nodeSub2 = null;
 			iterModCount = modCount;
+			canRemove = false;
 		}
 
 		@Override
 		public boolean hasNext() {
-			// TODO 
-			return false;
+            if(iterModCount != modCount){
+                throw new ConcurrentModificationException();
+            } 
+			return nodeCurrent.getNext() != null;
 		}
 
 		@Override
 		public T next() {
-			// TODO 
-			return null;
+			if(iterModCount != modCount){
+                throw new ConcurrentModificationException();
+            }
+			if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            canRemove = true;
+			nodeSub2 = nodeSub1;
+			nodeSub1 = nodeCurrent;
+			nodeCurrent = nodeCurrent.getNext();
+			return nodeCurrent.getElement();
 		}
 		
 		@Override
