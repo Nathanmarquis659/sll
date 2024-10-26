@@ -78,7 +78,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 				currentNode = currentNode.getNext();
 			}
 		}
-		
+
 		if (!isFound) {
 			throw new NoSuchElementException();
 		}
@@ -158,7 +158,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		Node<T> currentNode = head;
 
-		for (int i = 0; i < size-1; i++) {
+		for (int i = 0; i < index; i++) {
 			currentNode = currentNode.getNext();
 		}
 		
@@ -174,7 +174,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		Node<T> currentNode = head;
 
-		for (int i = 0; i < size-1; i++) {
+		for (int i = 0; i < index; i++) {
 			currentNode = currentNode.getNext();
 		}
 		
