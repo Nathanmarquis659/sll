@@ -326,10 +326,10 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            canRemove = true;
 			nodeSub2 = nodeSub1;
 			nodeSub1 = nodeCurrent;
 			nodeCurrent = nodeCurrent.getNext();
+            canRemove = true;
 			return nodeSub1.getElement();
 		}
 		
@@ -341,10 +341,15 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if (canRemove == false) {
                 throw new IllegalStateException();
             }
-
+			
+			if (head == nodeSub1) {
+				head = head.getNext();
+			} else if (tail == nodeSub1) {
+				tail = nodeSub1;
+			}
+			
 			nodeSub1 = nodeSub2;
 			nodeSub2 = null;
-
             canRemove = false;
 			size--;
             modCount++;
