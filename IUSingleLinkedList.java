@@ -265,7 +265,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
             if(iterModCount != modCount){
                 throw new ConcurrentModificationException();
             } 
-			return nodeCurrent.getNext() != null;
+			return nodeCurrent != null;
 		}
 
 		@Override
