@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * An Iterator with working remove() method is implemented, but
  * ListIterator is unsupported.
  * 
- * @author 
+ * @author Nathan Marquis
  * 
  * @param <T> type to store
  */
@@ -26,11 +26,10 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public void addToFront(T element) {
 		Node<T> newHead = new Node<T>(element);
-		if (isEmpty()) {
-			head = tail = newHead;
-		} else {
-			newHead.setNext(head);
-			head = newHead;
+		newHead.setNext(head);
+		head = newHead;
+		if (tail == null) {
+			tail = head;
 		}
 		size ++;
 		modCount++;
@@ -39,12 +38,12 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public void addToRear(T element) {
 		Node<T> newTail = new Node<T>(element);
-		if (isEmpty()) {
-			head = tail = newTail;
-		} else {
+		if (!isEmpty()) {
 			tail.setNext(newTail);
-			tail = newTail;
+		} else {
+			head = newTail;
 		}
+		tail = newTail;
 		size ++;
 		modCount++;
 	}
@@ -63,9 +62,24 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void add(int index, T element) {
-		// TODO 
-		// size ++;
-		// modCount++;
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index == 0) {
+			addToFront(element);
+		} else if (index == size) {
+			addToRear(element);
+		} else {
+			Node<T> currentNode = head;
+			Node<T> addNode = new Node<>(element);
+			for (int i=0; i < index-1; i++) {
+				currentNode = currentNode.getNext();
+			}
+			addNode.setNext(currentNode.getNext());
+			currentNode.setNext(addNode);
+			size ++;
+			modCount++;
+		}
 	}
 
 	@Override
@@ -90,8 +104,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		
 		while (current != null && !found) {
 			if (element.equals(current.getElement())) {
-				found = true;
-			} else {
+				found = true;            
 				previous = current;
 				current = current.getNext();
 			}
@@ -120,7 +133,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T remove(int index) {
-		if (index < 0 || size-1 < index) {
+		if (index < 0 || size <= index) {
 			throw new IndexOutOfBoundsException();
 		}
 		int nodeIndex = 0;
@@ -155,7 +168,6 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	@Override
 	public T get(int index) {
 		// TODO 
-		// modCount++;
 		return null;
 	}
 
