@@ -59,9 +59,29 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addAfter(T element, T target) {
-		// TODO 
-		// size ++;
-		// modCount++;
+		// if (!contains(target)) {
+		// 	throw new NoSuchElementException();
+		// }
+		Node<T> newNode = new Node<T>(element);
+		Node<T> currentNode = head;
+		boolean isFound = false;
+		while (currentNode != null && !isFound) {
+			if (currentNode.getElement().equals(target)) {
+				isFound = true;
+				currentNode.setNext(newNode);
+				if (currentNode == tail) {
+					newNode = tail;
+				}
+				size ++;
+				modCount++;
+			} else {
+				currentNode = currentNode.getNext();
+			}
+		}
+		
+		if (!isFound) {
+			throw new NoSuchElementException();
+		}
 	}
 
 	@Override
