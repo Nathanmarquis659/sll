@@ -350,9 +350,8 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 				tail = nodeSub2;
 				tail.setNext(null);
 			}
-			
-			// nodeSub1 = nodeSub2;
-			// nodeSub2 = null;
+		
+			//Do not do anything if nodeSub2 is false!
 			if (nodeSub2 != null) {
 				nodeSub2.setNext(nodeCurrent);
 				nodeSub1 = nodeSub2;
