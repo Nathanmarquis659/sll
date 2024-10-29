@@ -348,7 +348,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 				tail.setNext(null);
 			}
 		
-			//Do not do anything if nodeSub2 is false!
+			//Do not do anything if nodeSub2 is null, this case is removing head. Already done above. 
 			if (nodeSub2 != null) {
 				nodeSub2.setNext(nodeCurrent);
 				nodeSub1 = nodeSub2;
